@@ -1,3 +1,11 @@
+/*
+Covid 19 Data Exploration 
+
+Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
+
+*/
+
+
 select * from Portfolio_project..covidDeaths$
 where continent is not null
 order by 3,4;
@@ -6,6 +14,7 @@ select * from Portfolio_project..covidvaccin$
 order by 3,4;
 
 --covid death percentage in India
+
 select location,date,total_cases,total_deaths,total_cases,CAST( total_deaths AS float) / CAST(total_cases AS float) *100 as DEathPercentage
 from Portfolio_project..covidDeaths$
 where location like '%india%'
@@ -70,7 +79,7 @@ order by 2,3
 -- CTE
 
 WITH popvsvac(continent,location,date,population,new_vaccinations,pplgettingvacinated)
-as 
+AS
 (
 select cd.continent,cd.location,cd.date,cd.population,cv.new_vaccinations,
 sum(cast(cv.new_vaccinations as BIGINT)) OVER (Partition by cd.location order by cd.location,cv.date) as pplgettingvacinated
